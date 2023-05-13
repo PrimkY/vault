@@ -12,19 +12,15 @@ export class FilesService {
             const fileNameOrigin = file.originalname
             const extension = fileNameOrigin.split('.').reverse()[0]
             const fileNameNew = uuid.v4() + `.${extension}`;
-            const filePathBlack = path.resolve(__dirname, '..', 'garbage')
             const filePathWhite = path.resolve(__dirname, '..', 'storage')
-            if (!fs.existsSync(filePathBlack || filePathWhite)) {
-                fs.mkdirSync(filePathBlack, {recursive: true})
+            if (!fs.existsSync(filePathWhite)) {
                 fs.mkdirSync(filePathWhite, {recursive: true})
             }
-            await fs.writeFileSync(path.join(filePathBlack, fileNameNew), file.buffer)
-            await sharp(path.join(filePathBlack, fileNameNew))
+            await sharp(file.buffer)
                     .resize(600,600, {
                         fit: "fill"
                     })
                     .toFile(filePathWhite + '/' + fileNameNew)
-            await fs.rmSync(filePathBlack, { recursive: true, force: true})
             return fileNameNew
         } catch (e) {
             console.log(e)
