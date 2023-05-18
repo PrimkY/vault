@@ -31,7 +31,7 @@ export class VideosService {
                 .on('error', (err) => {
                     console.log("Error:" + err.message)
                 })
-            return fileNameNew
+            return fileNameNew + extension
         }
         catch (e) {
             console.log(e)
