@@ -1,29 +1,23 @@
-import { Controller, Get, Post, UploadedFile, UseInterceptors } from "@nestjs/common";
+import {Controller, Post, UploadedFile, UseInterceptors} from "@nestjs/common";
 import { FileInterceptor } from "@nestjs/platform-express";
 import {TransducerService} from "./transducer.service";
 import { Express } from 'express';
 
 
-@Controller('/transducer')
+@Controller('/')
 export class TransducerController {
 
     constructor(private readonly transducerService: TransducerService) {}
 
-    @Post()
+    @Post('/image')
     @UseInterceptors(FileInterceptor('image'))
     create(@UploadedFile() image) {
         return this.transducerService.create(image)
     }
 
     @Post('/video')
-    @UseInterceptors(FileInterceptor('file'))
+    @UseInterceptors(FileInterceptor('video'))
     createVideo(@UploadedFile() file: Express.Multer.File) {
         return this.transducerService.createVideo(file)
-
-    }
-
-    @Get()
-    getAll() {
-        return "just hello"
     }
 }

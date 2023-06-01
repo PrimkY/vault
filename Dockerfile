@@ -6,6 +6,10 @@ COPY package*.json ./
 
 RUN npm ci
 
+RUN apk update
+RUN apk add
+RUN apk add ffmpeg
+
 COPY . .
 
 RUN npm run build
